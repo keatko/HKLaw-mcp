@@ -38,8 +38,9 @@ The model never supplies statutory text. It can propose search terms and explain
 
 The server reads the OpenCode Zen credential from `open_code`, with `OPEN_CODE_API_KEY` supported as a compatibility alias. The configured endpoint and model are:
 
-- endpoint: `https://opencode.ai/zen/v1/responses`
-- model: `gpt-5.6-sol`
+- base URL: `https://opencode.ai/zen/v1`
+- endpoint: `https://opencode.ai/zen/v1/chat/completions`
+- model: `big-pickle`
 
 Keep the secret server-side. Never expose it through Vite variables or browser code. Without a configured secret, the service uses deterministic issue mapping and a clearly labelled fallback synthesis.
 

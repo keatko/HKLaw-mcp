@@ -1,5 +1,6 @@
-const OPEN_CODE_ENDPOINT = "https://opencode.ai/zen/v1/responses";
-export const OPEN_CODE_MODEL = "gpt-5.6-sol";
+export const OPEN_CODE_BASE_URL = "https://opencode.ai/zen/v1";
+const OPEN_CODE_ENDPOINT = `${OPEN_CODE_BASE_URL}/chat/completions`;
+export const OPEN_CODE_MODEL = "big-pickle";
 
 interface JsonSchemaRequest {
   name: string;
@@ -17,19 +18,19 @@ export function isOpenCodeConfigured(): boolean {
 function outputText(payload: unknown): string | undefined {
   if (!payload || typeof payload !== "object") return undefined;
   const root = payload as Record<string, unknown>;
-  if (typeof root.output_text === "string") return root.output_text;
-  if (!Array.isArray(root.output)) return undefined;
-  for (const item of root.output) {
-    if (!item || typeof item !== "object") continue;
-    const content = (item as Record<string, unknown>).content;
-    if (!Array.isArray(content)) continue;
-    for (const part of content) {
-      if (!part || typeof part !== "object") continue;
-      const text = (part as Record<string, unknown>).text;
-      if (typeof text === "string") return text;
-    }
-  }
-  return undefined;
+  if (!Array.isArray(root.choices)) return undefined;
+  const first = root.choices[0];
+  if (!first || typeof first !== "object") return undefined;
+  const message = (first as Record<string, unknown>).message;
+  if (!message || typeof message !== "object") return undefined;
+  const content = (message as Record<string, unknown>).content;
+  return typeof content === "string" ? content : undefined;
+}
+
+function parseJson(text: string): unknown {
+  const trimmed = text.trim();
+  const fenced = trimmed.match(/^```(?:json)?\s*([\s\S]*?)\s*```$/i);
+  return JSON.parse(fenced?.[1] ?? trimmed) as unknown;
 }
 
 export async function generateStructured(
@@ -47,17 +48,14 @@ export async function generateStructured(
     },
     body: JSON.stringify({
       model: OPEN_CODE_MODEL,
-      input,
-      reasoning: { effort: "medium" },
-      text: {
-        verbosity: "low",
-        format: {
-          type: "json_schema",
-          name: format.name,
-          strict: true,
-          schema: format.schema,
+      messages: [
+        {
+          role: "system",
+          content: `Return only valid JSON matching the JSON Schema named ${format.name}. Do not use markdown fences or add commentary. JSON Schema: ${JSON.stringify(format.schema)}`,
         },
-      },
+        { role: "user", content: input },
+      ],
+      temperature: 0,
     }),
   });
   if (!response.ok) {
@@ -66,5 +64,5 @@ export async function generateStructured(
   }
   const text = outputText(await response.json());
   if (!text) throw new Error("OpenCode returned no structured output");
-  return JSON.parse(text) as unknown;
+  return parseJson(text);
 }
