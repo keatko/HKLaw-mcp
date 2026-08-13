@@ -17,6 +17,8 @@ const PROVISION_KEYS = new Set([
   "schedule",
 ]);
 
+const CONTENT_KEYS = ["content", "leadIn", "paragraph", "subparagraph", "def", "proviso", "formula"];
+
 function asArray<T>(value: T | T[] | undefined | null): T[] {
   if (value == null) return [];
   return Array.isArray(value) ? value : [value];
@@ -49,6 +51,11 @@ function clean(value: string): string {
   return value.replace(/\s+/g, " ").trim();
 }
 
+function provisionBody(node: Record<string, unknown>): string {
+  const selected = CONTENT_KEYS.flatMap((key) => asArray(node[key])).map(text).filter(Boolean);
+  return clean(selected.length ? selected.join(" ") : text(node));
+}
+
 export function extractProvisions(document: unknown): ExtractedProvision[] {
   const out: ExtractedProvision[] = [];
   let orderIndex = 0;
@@ -66,12 +73,12 @@ export function extractProvisions(document: unknown): ExtractedProvision[] {
     if (PROVISION_KEYS.has(localKey)) {
       const provisionRef = clean(
         firstText(node, ["num", "no", "number", "label", "sectionNum", "clauseNum"]) ||
-          String(node["@_id"] ?? node["@_xml:id"] ?? `${keyName} ${orderIndex + 1}`),
+          String(node["@_name"] ?? node["@_id"] ?? node["@_xml:id"] ?? `${keyName} ${orderIndex + 1}`),
       );
       const heading = clean(
         firstText(node, ["heading", "title", "marginalNote", "crossHeading", "caption"]),
       );
-      const bodyText = clean(text(node));
+      const bodyText = provisionBody(node);
 
       if (bodyText.length >= 8) {
         out.push({

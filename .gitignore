@@ -1,5 +1,11 @@
 node_modules/
 .wrangler/
 data/*.sql
+data/*.db
+data/*.db-*
+.cache/
+dist/
+test-results/
+playwright-report/
 *.log
 .DS_Store
