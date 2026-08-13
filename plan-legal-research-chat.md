@@ -1,6 +1,7 @@
 # Confirmed decisions
 
 - The generated desktop visual concept was approved on 2026-08-13.
+- Owner validation is pending on the private Zo preview; public deployment remains blocked until approval.
 
 # Checklist
 
@@ -20,7 +21,7 @@
 
 - ☑ Build the approved bilingual React interface and responsive states.
 - ☑ Add production Zo Site configuration and desktop/mobile end-to-end checks.
-- ☐ Push the feature branch, open a draft PR, and deploy an owner-only preview.
+- ☑ Push the feature branch, open a draft PR, and deploy an owner-only preview.
 
 # Phase 1 — Complete HKeL provision index
 
