@@ -1,5 +1,3 @@
-export interface Env {
-  DB: D1Database;
-}
+export interface Env {}
 
 export type HkLanguage = "en" | "zh-Hant" | "zh-Hans";
