@@ -3,7 +3,8 @@
   "local_port": 54872,
   "entrypoint": "bun run dev",
   "env": {
-    "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db"
+    "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
+    "OPEN_CODE_MODEL": "nemotron-3.5-lightning-free"
   },
   "publish": {
     "label": "hk-legal-research",
@@ -12,7 +13,8 @@
     "published_port": 54873,
     "env": {
       "NODE_ENV": "production",
-      "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db"
+      "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
+      "OPEN_CODE_MODEL": "nemotron-3.5-lightning-free"
     }
   }
 }

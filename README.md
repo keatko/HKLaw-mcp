@@ -40,9 +40,11 @@ The server reads the OpenCode Zen credential from `open_code`, with `OPEN_CODE_A
 
 - base URL: `https://opencode.ai/zen/v1`
 - endpoint: `https://opencode.ai/zen/v1/chat/completions`
-- model: `nemotron-3.5-lightning-free`
+- model: the `OPEN_CODE_MODEL` environment variable, defaulting to `nemotron-3.5-lightning-free`
 
 Keep the secret server-side. Never expose it through Vite variables or browser code. Without a configured secret, the service uses deterministic issue mapping and a clearly labelled fallback synthesis.
+
+To switch models without changing code, update `OPEN_CODE_MODEL` in the Zo service environment and restart the service. The value must be an OpenCode Zen model ID compatible with the configured `chat/completions` endpoint, such as `grok-4.5`.
 
 ## Synchronize the official index
 
