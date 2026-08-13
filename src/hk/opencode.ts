@@ -1,7 +1,7 @@
-export const OPEN_CODE_BASE_URL = "https://opencode.ai/zen/v1";
+export const OPEN_CODE_BASE_URL = "https://opencode.ai/zen/go/v1";
 const OPEN_CODE_ENDPOINT = `${OPEN_CODE_BASE_URL}/chat/completions`;
 export const OPEN_CODE_MODEL =
-  process.env.OPEN_CODE_MODEL?.trim() || "nemotron-3.5-lightning-free";
+  process.env.OPEN_CODE_MODEL?.trim() || "grok-4.5";
 
 interface JsonSchemaRequest {
   name: string;

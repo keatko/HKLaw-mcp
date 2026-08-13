@@ -4,7 +4,7 @@
   "entrypoint": "bun run dev",
   "env": {
     "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
-    "OPEN_CODE_MODEL": "nemotron-3.5-lightning-free"
+    "OPEN_CODE_MODEL": "grok-4.5"
   },
   "publish": {
     "label": "hk-legal-research",
@@ -14,7 +14,7 @@
     "env": {
       "NODE_ENV": "production",
       "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
-      "OPEN_CODE_MODEL": "nemotron-3.5-lightning-free"
+      "OPEN_CODE_MODEL": "grok-4.5"
     }
   }
 }
