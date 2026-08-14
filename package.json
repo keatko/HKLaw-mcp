@@ -5,19 +5,34 @@
   "type": "module",
   "description": "Stateless Hong Kong law research MCP backed by official HKeL open data.",
   "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "dev": "NODE_ENV=development bun run --hot site-server.ts",
+    "build": "vite build",
+    "prod": "NODE_ENV=production bun run site-server.ts",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy",
+    "sync:hkel": "bun run scripts/sync-hkel.ts",
     "typecheck": "tsc --noEmit",
-    "test": "node --import tsx --test tests/*.test.ts"
+    "test": "bun test tests/*.test.ts tests/**/*.test.ts",
+    "check": "bun run typecheck && bun test && bun run build"
   },
   "dependencies": {
     "@modelcontextprotocol/server": "2.0.0",
+    "@vitejs/plugin-react": "latest",
     "agents": "0.20.1",
+    "fast-xml-parser": "latest",
+    "hono": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest",
     "zod": "4.4.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20260405.1",
+    "@types/bun": "latest",
     "@types/node": "26.1.1",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "tsx": "4.22.5",
     "typescript": "5.9.2",
     "wrangler": "4.115.0"

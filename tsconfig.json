@@ -1,15 +1,22 @@
 {
   "compilerOptions": {
     "target": "ES2022",
+    "jsx": "react-jsx",
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "lib": [
       "ES2022",
+      "DOM",
+      "DOM.Iterable",
       "WebWorker"
     ],
     "types": [
       "@cloudflare/workers-types",
-      "node"
+      "bun",
+      "node",
+      "react",
+      "react-dom",
+      "vite/client"
     ],
     "strict": true,
     "skipLibCheck": true,
@@ -20,7 +27,10 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.tsx",
     "scripts/**/*.ts",
-    "tests/**/*.ts"
+    "tests/**/*.ts",
+    "site-server.ts",
+    "vite.config.ts"
   ]
 }

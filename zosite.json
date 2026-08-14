@@ -1,0 +1,20 @@
+{
+  "name": "hk-legal-research",
+  "local_port": 54872,
+  "entrypoint": "bun run dev",
+  "env": {
+    "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
+    "OPEN_CODE_MODEL": "grok-4.5"
+  },
+  "publish": {
+    "label": "hk-legal-research",
+    "type": "http",
+    "entrypoint": "bash -lc 'source /root/.zo_secrets 2>/dev/null; bun run build && bun run prod'",
+    "published_port": 54873,
+    "env": {
+      "NODE_ENV": "production",
+      "HKLAW_DB_PATH": "/home/workspace/HKLaw-mcp/data/hklaw.db",
+      "OPEN_CODE_MODEL": "grok-4.5"
+    }
+  }
+}

@@ -38,6 +38,8 @@ export interface HkelChapter {
   CapNoDisplay: string;
   ChapterTitleEnglish?: string;
   ChapterTitleChinese?: string;
+  ChapterTitleTraditionalChinese?: string;
+  ChapterTitleSimplifiedChinese?: string;
   ChapterTitle?: string;
   LegislationType: string;
   PrincipalOrdinance: string;
@@ -75,6 +77,8 @@ export function chapterTitle(chapter: HkelChapter): string {
   return (
     chapter.ChapterTitleEnglish ??
     chapter.ChapterTitleChinese ??
+    chapter.ChapterTitleTraditionalChinese ??
+    chapter.ChapterTitleSimplifiedChinese ??
     chapter.ChapterTitle ??
     chapter.CapNoDisplay
   );
